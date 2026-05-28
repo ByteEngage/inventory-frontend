@@ -11,6 +11,8 @@ const EMPTY_PRODUCT = {
   supplierEmail:'', location:'', status:'ACTIVE'
 }
 
+const toFormValue = (value) => value ?? ''
+
 const toOptional = (value) => {
   const text = String(value ?? '').trim()
   return text === '' ? undefined : text
@@ -52,8 +54,28 @@ export default function Products() {
   useEffect(() => { load() }, [load])
   useEffect(() => { productApi.categories().then(r => setCategories(r.data.data)) }, [])
 
-  const openCreate = () => { setForm(EMPTY_PRODUCT); setModal('create') }
-  const openEdit = (p) => { setSelected(p); setForm({ ...p, price: p.price, costPrice: p.costPrice }); setModal('edit') }
+  const openCreate = () => { setSelected(null); setForm(EMPTY_PRODUCT); setModal('create') }
+  const openEdit = (p) => {
+    setSelected(p)
+    setForm({
+      ...EMPTY_PRODUCT,
+      ...p,
+      name: toFormValue(p.name),
+      sku: toFormValue(p.sku),
+      category: toFormValue(p.category),
+      description: toFormValue(p.description),
+      price: toFormValue(p.price),
+      costPrice: toFormValue(p.costPrice),
+      quantity: toFormValue(p.quantity),
+      reorderLevel: toFormValue(p.reorderLevel),
+      reorderQuantity: toFormValue(p.reorderQuantity),
+      supplierName: toFormValue(p.supplierName),
+      supplierEmail: toFormValue(p.supplierEmail),
+      location: toFormValue(p.location),
+      status: p.status || 'ACTIVE',
+    })
+    setModal('edit')
+  }
   const openStock = (p) => { setSelected(p); setStockForm({ type: 'ADD', quantity: '', reason: '' }); setModal('stock') }
   const openDelete = (p) => { setSelected(p); setModal('delete') }
 
@@ -69,7 +91,6 @@ export default function Products() {
 
       const payload = {
         name: form.name.trim(),
-        sku,
         category: form.category.trim(),
         description: toOptional(form.description),
         price: toRequiredNumber(form.price, 'Sale price', { min: 0.01 }),
@@ -82,7 +103,7 @@ export default function Products() {
         location: toOptional(form.location),
       }
       if (modal === 'create') {
-        await productApi.create(payload)
+        await productApi.create({ ...payload, sku })
         toast.success('Product created!')
       } else {
         await productApi.update(selected.id, { ...payload, status: form.status })

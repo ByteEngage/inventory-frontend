@@ -16,7 +16,7 @@ export default function Login() {
     if (!form.username || !form.password) { setError('Please fill in all fields'); return }
     const ok = await login(form.username, form.password)
     if (ok) navigate('/')
-    else setError('Invalid username or password. Try admin / Admin@123')
+    else setError('Invalid username or password.')
   }
 
   const quickLogin = (u, p) => setForm({ username: u, password: p })
@@ -29,8 +29,8 @@ export default function Login() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-500 rounded-2xl mb-4 shadow-lg shadow-blue-500/30">
             <Package size={32} className="text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-white">Inventory AI</h1>
-          <p className="text-gray-400 mt-1">Powered by Claude AI</p>
+          <h1 className="text-3xl font-bold text-white">MVT Inventory Management</h1>
+          <p className="text-gray-400 mt-1">Powered by ByteEngage</p>
         </div>
 
         {/* Card */}
@@ -77,7 +77,7 @@ export default function Login() {
           </form>
 
           {/* Quick login */}
-          <div className="mt-6 pt-6 border-t border-white/10">
+          <div className="mt-6 pt-6 border-t border-white/10" style={{display:"none"}}>
             <p className="text-xs text-gray-500 text-center mb-3">Quick login (demo accounts)</p>
             <div className="grid grid-cols-3 gap-2">
               {[['admin','Admin@123','Admin'],['manager','Manager@123','Manager'],['warehouse','Warehouse@123','Warehouse']].map(([u,p,l]) => (

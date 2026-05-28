@@ -29,8 +29,8 @@ export default function Layout() {
       <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-700">
         <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-lg">📦</div>
         <div>
-          <div className="font-bold text-sm">Inventory AI</div>
-          <div className="text-xs text-gray-400">Management System</div>
+          <div className="font-bold text-sm">MVT</div>
+          <div className="text-xs text-gray-400">Inventory Management System</div>
         </div>
         {mobile && (
           <button onClick={() => setOpen(false)} className="ml-auto text-gray-400 hover:text-white">
@@ -102,7 +102,7 @@ export default function Layout() {
           <button onClick={() => setOpen(true)} className="text-gray-500 hover:text-gray-700">
             <Menu size={22} />
           </button>
-          <span className="font-semibold text-gray-900">Inventory AI</span>
+          <span className="font-semibold text-gray-900">MVT</span>
         </div>
 
         <main className="flex-1 overflow-y-auto">
